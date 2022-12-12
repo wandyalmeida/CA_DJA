@@ -1,0 +1,50 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Equation;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author wandw
+ */
+public class Math implements MathInterface {
+
+    @Override
+    public void math(int id_user) {
+        Matrix matrix = new Matrix();
+        System.out.println(
+            "******** n variable linear equation ********");
+ 
+        for (int type = 1; type <=MathTypes.values().length; type++) {
+              System.out.println( type + ". " + MathTypes.values()[type-1]);
+          }
+        
+        System.out.println("Enter the number of matriz would like to use: ");
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        try {
+            if (num == 1 ) {
+                System.out.println("it is working");
+                matrix.Matrix_2X2(2, id_user);
+           
+            }if (num == 2 ) {
+                System.out.println("it is working");
+                matrix.Matrix_3X3(3, id_user);
+           
+            }
+            else {
+                System.out.println("Sorry, that is an invalid number");
+                math(id_user);
+            }
+          }
+          catch (Exception e) {
+              System.out.println("Sorry, that is an invalid input type");
+              math(id_user);
+          }
+
+    }
+    
+}
