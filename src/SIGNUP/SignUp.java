@@ -4,89 +4,66 @@
  */
 package SIGNUP;
 
+import DDL.UserDDL;
+import DML.RegularUserDML;
 import java.util.Scanner;
 
 /**
  *
  * @author wandw
  */
-public class SignUp {
+public class SignUp implements SignUpInterface{
     
-        Scanner input = new Scanner(System.in);
+    Scanner input = new Scanner(System.in);
+    RegularUserDML objRegularUserDML = new RegularUserDML();
+    UserDDL objUserDDL = new UserDDL();
     
-    public void SingUpUsers(){
-        String name_usuario, senha_usuario;
+    @Override
+    public void Sign_upUsers(){
+        String user_name, password;
        
-        System.out.println("Digite nome d0 usuario");
-        name_usuario = input.nextLine();
-        System.out.println("Digite uma senha para o usuario");
-        senha_usuario = input.nextLine();
-        RegularUserDTO objregistaruserdto = new RegularUserDTO();
-        objregistaruserdto.setUser_name(name_usuario);
-        objregistaruserdto.setUser_password(senha_usuario);
+        System.out.println("Username");
+        user_name = input.nextLine();
+        System.out.println("password");
+        password = input.nextLine();
+        RegularUserDML signUP = new RegularUserDML();
+        signUP.setUser_name(user_name);
+        signUP.setUser_password(password);
         
-        
-        RegularUserDAO objregularuserdao = new RegularUserDAO();
-        objregularuserdao.registrarUser(objregistaruserdto);
+       
+        objUserDDL.Sign_UPUser(signUP);
         
     }
     
+    @Override
     public void update(int id){
-           RegularUserDAO list = new RegularUserDAO();
-//           int id;
-           String nome_usuario, senha_usuario;
+            UserDDL list = new UserDDL();
+            String username, password;
+            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            System.out.println("Digite um novo usuario: ");
+            username = input.next();
+            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            System.out.println("Digite a nova senha: ");
+            password = input.next();
+            
+            objRegularUserDML.setId_user(id);
+            objRegularUserDML.setUser_name(username);
+            objRegularUserDML.setUser_password(password);
 
-//            if ("admin".equals(admin) && "123".equals(senha)){
-//                    list.pesquisarUsuario();
-//                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-//                    System.out.println("Digite o id do usuario que deseja modificar");
-//                    id = input.nextInt();
-//                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-//                    System.out.println("Digite um novo usuario: ");
-//                    nome_usuario = input.next();
-//                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-//                    System.out.println("Digite a nova senha: ");
-//                    senha_usuario = input.next();
-//                    RegularUserDTO obDTO = new RegularUserDTO();
-//                    obDTO.setId_user(id);
-//                    obDTO.setUser_name(nome_usuario);
-//                    obDTO.setUser_password(senha_usuario);
-//
-//                    RegularUserDAO obDAO = new RegularUserDAO();
-//                    obDAO.alterarUsuario(obDTO);
-//             }else{
-//                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-////                    System.out.println("Digite o  seu id");
-////                    id = input.nextInt();
-                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    System.out.println("Digite um novo usuario: ");
-                    nome_usuario = input.next();
-                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    System.out.println("Digite a nova senha: ");
-                    senha_usuario = input.next();
-                    RegularUserDTO obDTO = new RegularUserDTO();
-                    obDTO.setId_user(id);
-                    obDTO.setUser_name(nome_usuario);
-                    obDTO.setUser_password(senha_usuario);
-
-                    RegularUserDAO obDAO = new RegularUserDAO();
-                    obDAO.alterarUsuario(obDTO);
-//            }
+            objUserDDL.updateUser(objRegularUserDML);
            
     }
+    
+    @Override
     public void delete(){
-         int id_usuario;
+         int user_id;
          System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-         System.out.println("Digite o id que voce deseja excuir: ");
-         id_usuario = input.nextInt();
+         System.out.println("Type the id that would you like to delete: ");
+         user_id = input.nextInt();
          
-         RegularUserDTO obDTO = new RegularUserDTO();
+         objRegularUserDML.setId_user(user_id);
          
-         obDTO.setId_user(id_usuario);
-         
-         RegularUserDAO obDAO = new RegularUserDAO();
-         
-         obDAO.excuirdados(obDTO);
+         objUserDDL.delete(objRegularUserDML);
     }
     
 }

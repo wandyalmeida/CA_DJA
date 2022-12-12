@@ -4,6 +4,10 @@
  */
 package LOGIN;
 
+import DDL.Autentication;
+import DDL.UserDDL;
+import DML.UserDML;
+import SIGNUP.SignUp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -14,29 +18,32 @@ import java.util.Scanner;
  */
 public class login implements LoginInterface {
     Scanner input = new Scanner(System.in);
-    RegularUserDAO list = new RegularUserDAO();
+    UserDDL list = new UserDDL();
+    SignUp update = new SignUp();
     Equation.Math math = new Equation.Math();
+    
     
     
     @Override
     public void login() {
         try {
-            String name_usuario, senha_usuario;
+            String user_name, password;
             int id;
 //            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             System.out.println("Digite seu usuario:");
-            name_usuario = input.next();
+            user_name = input.next();
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             System.out.println("Digite sua senha:");
-            senha_usuario = input.next();
+            password = input.next();
             
-            UsuarioDTO objusuariodto = new UsuarioDTO();
-            objusuariodto.setNome_usuario(name_usuario);
-            objusuariodto.setSenha_usuario(senha_usuario);
+            UserDML objuserdml = new UserDML();
+            objuserdml.setUser_name(user_name);
+            objuserdml.setUser_password(password);
             
-            UsuarioDAO objusuariodao = new UsuarioDAO();
-            ResultSet rsusuariodao = objusuariodao.autenticationUesr(objusuariodto);
-            id = list.getId(name_usuario, senha_usuario);
+            Autentication objautentication = new Autentication();
+            ResultSet rsusuariodao = objautentication.autenticationUesr(objuserdml);
+            id = list.getId(user_name, password);
+            
             
             
             if (rsusuariodao.next()) {
@@ -50,7 +57,7 @@ public class login implements LoginInterface {
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 login();
             }
-            list.check_admin(id, name_usuario, senha_usuario);
+            list.check_admin(id, user_name, password);
 
         } catch (SQLException e) {
             System.out.println("Erro no login " + e);
@@ -82,8 +89,8 @@ public class login implements LoginInterface {
                     
                 case "2":
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    RegistrarUsers registrar = new RegistrarUsers();
-                    registrar.RegistrarUsers();
+                    SignUp signUP = new SignUp();
+                    signUP.Sign_upUsers();
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 //                    break;
                     menu();
@@ -100,8 +107,8 @@ public class login implements LoginInterface {
     @Override
     public void admin(int id){
         boolean start = true; 
-        RegularUserDAO list = new RegularUserDAO();
-        RegistrarUsers alt = new RegistrarUsers();
+        UserDDL list = new UserDDL();
+        
       
          System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
          System.out.println("What would you like to do? ");
@@ -120,7 +127,7 @@ public class login implements LoginInterface {
                 case "1": 
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     System.out.println(id);
-                    alt.alterar(id);
+                    update.update(id);
    
                     admin(id);
                     
@@ -129,19 +136,19 @@ public class login implements LoginInterface {
                 case "2":
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
-                    list.pesquisarUsuario(id);
+                    list.findUser(id);
                     admin(id);
 
                 case "3":
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    list.pesquisarUsuario(id);  
-//                    RegistrarUsers deletar = new RegistrarUsers();
+                    list.findUser(id);  
+                    SignUp del = new SignUp();
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    deletar.excuirdados();
+                    del.delete();
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     System.out.println("Usuario deletado com sucesso");
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    list.pesquisarUsuario(id);
+                    list.findUser(id);
                     admin(id);
 //                  
                 case "4":
@@ -153,7 +160,7 @@ public class login implements LoginInterface {
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     System.out.println("Bye see you soon");
                     menu();
-//
+
                 default:
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     System.out.println("Sorry, Wrong option try again...");
@@ -170,7 +177,7 @@ public class login implements LoginInterface {
     @Override
     public void users(int id){
         boolean start = true; 
-        RegistrarUsers alt = new RegistrarUsers();
+        
       
          System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
          System.out.println("What would you like to do? ");
@@ -188,7 +195,7 @@ public class login implements LoginInterface {
 
                 case "1": 
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    alt.alterar(id);
+                    update.update(id);
                     users(id);
                     
 //                    break;
