@@ -9,23 +9,48 @@ package DML;
  * @author wandw
  */
 public class UserDML {
-    private int user_id;
-    private String user_name, user_password;
+    private String username, user_password, surname, email, contact;
+    private int id_user;
 
-    public int getUser_id() {
-        return user_id;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getUser_password() {

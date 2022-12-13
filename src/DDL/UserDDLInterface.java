@@ -4,17 +4,20 @@
  */
 package DDL;
 
-import DML.RegularUserDML;
+import DML.UserDML;
 
 /**
  *
  * @author wandw
  */
 public interface UserDDLInterface {
-    public void Sign_UPUser(RegularUserDML objsign_up);
+    public boolean outputSetup();
+    public void Sign_UPUser(UserDML objsign_up);
     public void check_admin(int id, String user_name, String password);
     public void findUser(int id);
     public int getId(String user_name, String password);
-    public void updateUser(RegularUserDML objupdateDML);
-    public void delete(RegularUserDML objdeleteDML);
+    public void updateUser(UserDML objupdateDML);
+    public void delete(UserDML objdeleteDML);
+    public void insert_admin();
+    
 }

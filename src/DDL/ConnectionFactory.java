@@ -14,13 +14,17 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory implements ConnectionInterface{
 
+    
     @Override
     public Connection conectaBD() {
         Connection conn = null;
         
         try {
-            String url = "jdbc:mysql://localhost:3306/bancoteste?user=root&password=root";
-            conn = DriverManager.getConnection(url);
+            String dbName = "systemca";
+            String DB_URL = "jdbc:mysql://localhost/" + dbName;
+            String USER = "root";
+            String PASS = "root";
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/", USER, PASS);
 //            System.out.println("connect yeahhh");
             
             

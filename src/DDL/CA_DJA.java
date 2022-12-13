@@ -4,6 +4,8 @@
  */
 package DDL;
 
+import LOGIN.login;
+
 /**
  *
  * @author wandw
@@ -15,8 +17,11 @@ public class CA_DJA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ConnectionFactory con = new ConnectionFactory();
-        con.conectaBD();
+        UserDDL createDB = new UserDDL();
+        createDB.outputSetup();
+//        createDB.insert_admin();
+        login log = new login();
+        log.menu();
     }
     
 }

@@ -4,12 +4,13 @@
  */
 package DDL;
 
-import DML.RegularUserDML;
+import DML.UserDML;
 import LOGIN.login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 /**
@@ -17,33 +18,117 @@ import java.sql.SQLException;
  * @author wandw
  */
 public class UserDDL implements UserDDLInterface{
+    String dbName = "systemca";
+
+    
     
     Connection conn;
     PreparedStatement pstm;
     ResultSet rs;
-//    ArrayList<UserDML> list = new ArrayList<>();
+    
+    
+    @Override
+    public boolean outputSetup(){
+        try {
+           conn = new ConnectionFactory().conectaBD();
+           Statement stmt = conn.createStatement();
+            
+            stmt.execute("CREATE SCHEMA IF NOT EXISTS systemca;");
+            stmt.execute("USE systemca;");
+            /*
+            user_id INT(20) PRIMARY KEY AUTO_INCREMENT,
+            username VARCHAR(30),
+            password VARCHAR(30),
+            email VARCHAR(100),
+            contact VARCHAR(15);
+            */
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS users  ("
+                            + "user_id INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                            + "username VARCHAR(30) DEFAULT 'CCT',"
+                            + "password VARCHAR(30) DEFAULT 'Dublin',"
+                            + "surname VARCHAR(40),"
+                            + "email VARCHAR(100),"
+                            + "contact VARCHAR(15));"
+            );
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS equation ("
+                            + "equation_id INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                            + "equations VARCHAR(45),"
+                            + "solution VARCHAR(45),"
+                            + "users_id INT(20) NOT NULL,"
+                            + "CONSTRAINT users_id FOREIGN KEY (users_id) REFERENCES users(user_id));"
+                            
+            );
+            stmt.execute(
+                    "CREATE TABLE IF NOT EXISTS admin_user  ("
+                            + "admin_id INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                            + "userS_id INT(20) NOT NULL,"
+                            + "equation_id INT(20) NOT NULL,"
+                            + "CONSTRAINT user_id FOREIGN KEY (userS_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,"
+                            + "CONSTRAINT equation_id FOREIGN KEY (equation_id) REFERENCES equation(equation_id) ON DELETE CASCADE ON UPDATE CASCADE);"
+                            
+            );
+           
+            
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     @Override
-    public void Sign_UPUser(RegularUserDML objsign_up) {
-       String sql = "insert into  user (user_name, password) values (?, ?)";
+    public void Sign_UPUser(UserDML objsign_up) {
+       
+       String sql = "insert into  users (username, password) values (?, ?)";
 
         conn = new ConnectionFactory().conectaBD();
 
         try {
+            
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objsign_up.getUser_name());
+            pstm.setString(1, objsign_up.getUsername());
             pstm.setString(2, objsign_up.getUser_password());
-
+            
+            pstm.execute("USE systemca;");
             pstm.execute();
             pstm.close();
         } catch (SQLException e) {
             System.out.println("Sign UP User: " + e);
         }
     }
+    
+      @Override
+    public void insert_admin() {
+       
+       String sql = "insert into users (username, password) values (?, ?)";
+//       String sql2 = "insert into admin_user (admin_id, userS_id, equation_id) values (null, 1, 1)";
+        conn = new ConnectionFactory().conectaBD();
+
+        try {
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, "CCT");
+            pstm.setString(2, "Dublin");
+                    
+            
+            pstm.execute("USE systemca;");
+//            pstm = conn.prepareStatement(sql2);
+//            pstm.setInt(1, 1);
+//            pstm.setInt(2, 0);
+            pstm.execute("USE systemca;");
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            System.out.println("insert Admin: " + e);
+        }
+    }
 
     @Override
-    public void check_admin(int id, String user_name, String password) {
-        String sql = "select * from user where user_name = 'cct' and password = ?";
+    public void check_admin(int id, String username, String password) {
+        String sql = "select * from users where user_id = '1' and username = ? and password = ?";
         login lg = new login();
 
    
@@ -51,15 +136,17 @@ public class UserDDL implements UserDDLInterface{
             conn = new ConnectionFactory().conectaBD();
             pstm = conn.prepareStatement(sql);
             
-            pstm.setString(1, password);
+            pstm.setString(1, username);
+            pstm.setString(2, password);
             
+            pstm.execute("USE systemca;");
             rs = pstm.executeQuery();
             if(rs.next()){
-                System.out.println("Welcome back "+ user_name);
+                System.out.println("Welcome back "+ username);
                 lg.admin(id);
                                
             }else{
-                System.out.println("Welcome back "+ user_name);
+                System.out.println("Welcome back "+ username);
                 lg.users(id);
             }
             
@@ -70,7 +157,7 @@ public class UserDDL implements UserDDLInterface{
 
     @Override
     public void findUser(int id) {
-        String sql = "select * from user where id_user != ?";
+        String sql = "select * from users where user_id != ?";
         String user_name,user_password;
         int id_user;
 
@@ -81,14 +168,15 @@ public class UserDDL implements UserDDLInterface{
             pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
             
+            pstm.execute("USE systemca;");
             rs = pstm.executeQuery();
             
             System.out.println("id  " + "  name  " + " password  " );
 
             while(rs.next()){
                   
-                   id_user = rs.getInt("id_user");
-                   user_name = rs.getString("user_name");
+                   id_user = rs.getInt("user_id");
+                   user_name = rs.getString("username");
                    user_password = rs.getString("password");
 
                    System.out.println(id_user +"| "+user_name +"| "+user_password );
@@ -98,13 +186,47 @@ public class UserDDL implements UserDDLInterface{
                
             }
         } catch (SQLException e) {
-            System.out.println("Regular User: " + e);
+            System.out.println("Find User: " + e);
+        }
+    }
+    
+    public void seeEquation() {
+        String sql = "select * from equation ";
+        String user_name,user_password;
+        int id_user, equation_id;
+
+        
+        
+        try {
+            conn = new ConnectionFactory().conectaBD();
+            pstm = conn.prepareStatement(sql);
+//            pstm.setInt(1, id);
+            
+            pstm.execute("USE systemca;");
+            rs = pstm.executeQuery();
+            
+            System.out.println("id  " + "  name  " + " solution  " + "User_ID" );
+
+            while(rs.next()){
+                  
+                   equation_id = rs.getInt("equation_id");
+                   user_name = rs.getString("equations");
+                   user_password = rs.getString("solution");
+                   id_user = rs.getInt("users_id");
+                   System.out.println(equation_id +"| "+user_name +"| "+user_password+"| "+id_user );
+                   
+                   
+                   
+               
+            }
+        } catch (SQLException e) {
+            System.out.println("Find User: " + e);
         }
     }
 
     @Override
-    public int getId(String user_name, String password) {
-        String sql = "select * from user where user_name = ? and password = ?";
+    public int getId(String username, String password) {
+        String sql = "select * from users where username = ? and password = ?";
 
         int id_user;
         
@@ -113,31 +235,36 @@ public class UserDDL implements UserDDLInterface{
             conn = new ConnectionFactory().conectaBD();
             pstm = conn.prepareStatement(sql);
             
-            pstm.setString(1, user_name);
+            pstm.setString(1, username);
             pstm.setString(2, password);
             
+            pstm.execute("USE systemca;");
             rs = pstm.executeQuery();
             if(rs.next()){
-                id_user = rs.getInt("id_user");
+                id_user = rs.getInt("user_id");
                 return id_user; 
                                
             }
         } catch (SQLException e) {
-            System.out.println("Regular User: " + e);
+            System.out.println("Get ID: " + e);
         }
         return 0;
     }
 
     @Override
-    public void updateUser(RegularUserDML objupdateDML) {
-        String sql = "update user set user_name = ?, password = ?  where id_user = ? ";
+    public void updateUser(UserDML objupdateDML) {
+        String sql = "update users set username = ?, password = ?, surname = ?, email = ?, contact = ?  where user_id = ? ";
         conn = new ConnectionFactory().conectaBD();
          try {
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objupdateDML.getUser_name());
+            pstm.setString(1, objupdateDML.getUsername());
             pstm.setString(2, objupdateDML.getUser_password());
-            pstm.setInt(3, objupdateDML.getId_user());
+            pstm.setString(3, objupdateDML.getSurname());
+            pstm.setString(4, objupdateDML.getEmail());
+            pstm.setString(5, objupdateDML.getContact());
+            pstm.setInt(6, objupdateDML.getId_user());
 
+            pstm.execute("USE systemca;");
             pstm.execute();
             pstm.close();
         } catch (SQLException e) {
@@ -146,18 +273,26 @@ public class UserDDL implements UserDDLInterface{
     }
 
     @Override
-    public void delete(RegularUserDML objdeleteDML) {
-        String sql = "delete from user where id_user = ? ";
-//        String user_name,user_password;
-//        int id_user;
+    public void delete(UserDML objdeleteDML) {
+        String sql = "delete from users where user_id = ? ";
+
         
         
         try {
-            conn = new ConnectionFactory().conectaBD();
-            pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, objdeleteDML.getId_user());
-            pstm.execute();
-            pstm.close();
+            if (objdeleteDML.getId_user() == 1){
+                System.out.println("Sorry you cant delete this user!");
+                login login = new login();
+                login.admin(objdeleteDML.getId_user());
+            }else{
+                conn = new ConnectionFactory().conectaBD();
+                pstm = conn.prepareStatement(sql);
+                pstm.setInt(1, objdeleteDML.getId_user());
+
+                pstm.execute("USE systemca;");
+                pstm.execute();
+                pstm.close();
+            }
+            
         } catch (SQLException e) {
             System.out.println("Delete usuario: " + e);
         }

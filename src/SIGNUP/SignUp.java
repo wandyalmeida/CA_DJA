@@ -5,7 +5,7 @@
 package SIGNUP;
 
 import DDL.UserDDL;
-import DML.RegularUserDML;
+import DML.UserDML;
 import java.util.Scanner;
 
 /**
@@ -15,19 +15,19 @@ import java.util.Scanner;
 public class SignUp implements SignUpInterface{
     
     Scanner input = new Scanner(System.in);
-    RegularUserDML objRegularUserDML = new RegularUserDML();
+    UserDML objRegularUserDML = new UserDML();
     UserDDL objUserDDL = new UserDDL();
     
     @Override
     public void Sign_upUsers(){
-        String user_name, password;
+        String username, password;
        
         System.out.println("Username");
-        user_name = input.nextLine();
+        username = input.nextLine();
         System.out.println("password");
         password = input.nextLine();
-        RegularUserDML signUP = new RegularUserDML();
-        signUP.setUser_name(user_name);
+        UserDML signUP = new UserDML();
+        signUP.setUsername(username);
         signUP.setUser_password(password);
         
        
@@ -37,18 +37,31 @@ public class SignUp implements SignUpInterface{
     
     @Override
     public void update(int id){
-            UserDDL list = new UserDDL();
-            String username, password;
+        
+            String username, password, surname, email, contact;
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            System.out.println("Digite um novo usuario: ");
+            System.out.println("New username: ");
             username = input.next();
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            System.out.println("Digite a nova senha: ");
+            System.out.println("New password: ");
             password = input.next();
+            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            System.out.println("Surname: ");
+            surname = input.next();
+            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            System.out.println("Email: ");
+            email = input.next();
+            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            System.out.println("Contact: ");
+            contact = input.next();
             
             objRegularUserDML.setId_user(id);
-            objRegularUserDML.setUser_name(username);
+            objRegularUserDML.setUsername(username);
             objRegularUserDML.setUser_password(password);
+            objRegularUserDML.setSurname(surname);
+            objRegularUserDML.setEmail(email);
+            objRegularUserDML.setContact(contact);
+            
 
             objUserDDL.updateUser(objRegularUserDML);
            

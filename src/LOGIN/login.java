@@ -5,12 +5,15 @@
 package LOGIN;
 
 import DDL.Autentication;
+import DDL.ConnectionFactory;
 import DDL.UserDDL;
 import DML.UserDML;
 import SIGNUP.SignUp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import Equation.Math;
+import java.sql.Connection;
 
 /**
  *
@@ -20,53 +23,55 @@ public class login implements LoginInterface {
     Scanner input = new Scanner(System.in);
     UserDDL list = new UserDDL();
     SignUp update = new SignUp();
-    Equation.Math math = new Equation.Math();
+    Math math = new Math();
+    Connection conn;
     
     
     
     @Override
     public void login() {
         try {
-            String user_name, password;
+            conn = new ConnectionFactory().conectaBD();
+            String username, password;
             int id;
 //            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            System.out.println("Digite seu usuario:");
-            user_name = input.next();
+            System.out.println("Username:");
+            username = input.next();
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            System.out.println("Digite sua senha:");
+            System.out.println("Password:");
             password = input.next();
             
             UserDML objuserdml = new UserDML();
-            objuserdml.setUser_name(user_name);
+            objuserdml.setUsername(username);
             objuserdml.setUser_password(password);
             
             Autentication objautentication = new Autentication();
-            ResultSet rsusuariodao = objautentication.autenticationUesr(objuserdml);
-            id = list.getId(user_name, password);
+            ResultSet rs = objautentication.autenticationUesr(objuserdml);
+            id = list.getId(username, password);
             
             
             
-            if (rsusuariodao.next()) {
+            if (rs.next()) {
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 System.out.println("Loggin sucefull");
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                                          
             } else {
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                System.out.println("Usuario ou senha invalida");
+                System.out.println("Usename or password is invalid");
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 login();
             }
-            list.check_admin(id, user_name, password);
+            list.check_admin(id, username, password);
 
         } catch (SQLException e) {
-            System.out.println("Erro no login " + e);
+            System.out.println("Erro in login " + e);
         }
 
     }
     
     @Override
-     public void menu(){
+    public void menu(){
         boolean start = true; 
          System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
          System.out.println("Welcome to equation Database: ");
@@ -146,14 +151,15 @@ public class login implements LoginInterface {
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     del.delete();
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    System.out.println("Usuario deletado com sucesso");
+                    System.out.println("User deleted!");
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     list.findUser(id);
                     admin(id);
 //                  
                 case "4":
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                    System.out.println("It is not working yet.");
+//                    System.out.println("It is not working yet.");
+                    list.seeEquation();
                     admin(id);
 
                 case "5":
@@ -178,7 +184,7 @@ public class login implements LoginInterface {
     public void users(int id){
         boolean start = true; 
         
-      
+         
          System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
          System.out.println("What would you like to do? ");
          System.out.println("[1] Modify profile");

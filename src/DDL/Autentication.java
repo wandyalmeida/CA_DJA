@@ -16,25 +16,28 @@ import java.sql.SQLException;
  */
 public class Autentication implements AutenticationInterface {
     Connection conn;
+    PreparedStatement pstm;
     
     @Override
     public ResultSet autenticationUesr(UserDML objUserDML) {
           conn = new ConnectionFactory().conectaBD();
         
         try {
-            String sql = "select * from usuario where nome_usuario = ? and senha_usuario = ?";
             
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objUserDML.getUser_name());
+            String sql = "select * from users where username = ? and password = ?";
+            
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, objUserDML.getUsername());
             pstm.setString(2, objUserDML.getUser_password());
             
            
-            
+            pstm.execute("USE systemca;");
             ResultSet rs = pstm.executeQuery();
             
             return rs;
         } catch (SQLException e) {
-            System.out.println("UsuarioDao: " + e);
+            System.out.println("Autentication: " + e);
             return null;
         }
     }
