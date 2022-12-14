@@ -19,7 +19,6 @@ public class CA_DJA {
         // TODO code application logic here
         UserDDL createDB = new UserDDL();
         createDB.outputSetup();
-//        createDB.insert_admin();
         login log = new login();
         log.menu();
     }

@@ -10,12 +10,12 @@ package Equation;
  */
 public class Determinant {
 
-    static void obterCofactor(int[][] matriz, int[][] temp, int p, int q, int n) {
+    static void Cofactor(int[][] matrix, int[][] temp, int p, int q, int n) {
         int i = 0, j =0;
-        for (int fila = 0; fila < n; fila ++){
-            for (int columna = 0; columna < n; columna ++){
-                if(fila != p && columna != q){
-                    temp[i][j++] = matriz[fila][columna];
+        for (int row = 0; row < n; row ++){
+            for (int column = 0; column < n; column ++){
+                if(row != p && column != q){
+                    temp[i][j++] = matrix[row][column];
                     if(j == n-1){
                         j =0;
                         i++;
@@ -26,16 +26,16 @@ public class Determinant {
         }
     }
 
-    static int determinantMatrix(int[][] matriz, int n) {
+    static int determinantMatrix(int[][] matrix, int n) {
         int Determinant = 0;
         if(n == 1){
-            return matriz[0][0];
+            return matrix[0][0];
         }
         int temp[][] = new int[n][n];
         int multiplicador =1;
         for(int f = 0; f<n; f++){
-            obterCofactor(matriz, temp, 0, f, n);
-            Determinant += multiplicador * matriz[0][f] * determinantMatrix(temp, n-1);
+            Cofactor(matrix, temp, 0, f, n);
+            Determinant += multiplicador * matrix[0][f] * determinantMatrix(temp, n-1);
             multiplicador = -multiplicador;
         }
         return Determinant;

@@ -4,6 +4,7 @@
  */
 package Equation;
 
+import DDL.UserDDL;
 import LOGIN.login;
 import java.text.DecimalFormat;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class Matrix implements MatrixInterface {
 
     login lg = new login();
+    UserDDL user = new UserDDL();
     Scanner sc = new Scanner(System.in);
     
     @Override
@@ -26,6 +28,7 @@ public class Matrix implements MatrixInterface {
         System.out.println("ax + by + cz = d");
        
         // Input of coefficients from user
+        String numbers = null, numbers2 = null, numbers3 = null, equation, solution;
         int[][] matrix = new int[num][num];
         int[] constt = new int[num];
         int[][] matrix1 = new int[num][num];
@@ -35,15 +38,42 @@ public class Matrix implements MatrixInterface {
             
             for (int j = 0; j < num; j++) {
 
-                System.out.println("matrix ["+i+"]["+j+"]");
+//                System.out.println("matrix ["+i+"]["+j+"]");
                 matrix[i][j] = sc.nextInt();
                 
             }
-            System.out.println("const ["+ i +"] =");
+//            System.out.println("const ["+ i +"] =");
             constt[i] = sc.nextInt();
-            
+            if (matrix[i][1] >= 0){
+                 numbers3 = matrix[i][0] +"x + "+matrix[i][1]+ "y = "+ constt[i];
+                 if(numbers == null){
+                     numbers = numbers3;
+
+                 }else{
+                     numbers2 = numbers3;
+                 }
+//                  System.out.println(matrix[i][0] +"x + "+matrix[i][1]+ "y = "+ n4);
+                 
+             }
+             else{
+                 numbers3 = matrix[i][0] +"x "+matrix[i][1]+ "y = "+ constt[i];
+                 if(numbers == null){
+                     numbers = numbers3;
+
+                 }else{
+                     numbers2 = numbers3;
+                 }
+             }
+
         }
-        
+         
+           
+            System.out.println(numbers);
+            System.out.println(numbers2);
+            equation = numbers + " " + numbers3;
+//         System.out.println(equation);
+         
+         
         // Representation of linear equations in form of
         // matrix
         System.out.println(
@@ -96,8 +126,11 @@ public class Matrix implements MatrixInterface {
         }
         int determitationY =Determinant.determinantMatrix(matrix2, num);
         System.out.println("o determinant: " + determitationY);
-              
-        System.out.println("X: "+new DecimalFormat().format((double)determitationX / (double)determitationM) + ", Y: "+ new DecimalFormat("#.####").format((double)determitationY / (double)determitationM));
+         
+        solution = "X: "+new DecimalFormat().format((double)determitationX / (double)determitationM) + ", Y: "+ new DecimalFormat("#.####").format((double)determitationY / (double)determitationM);
+//        System.out.println("X: "+new DecimalFormat().format((double)determitationX / (double)determitationM) + ", Y: "+ new DecimalFormat("#.####").format((double)determitationY / (double)determitationM));
+        System.out.println(solution);
+        user.addEquation(equation, solution, id_user);
         lg.users(id_user);
     }
 
@@ -110,6 +143,7 @@ public class Matrix implements MatrixInterface {
         System.out.println("ax + by + cz = d");
        
         // Input of coefficients from user
+        String numbers = null, numbers2 = null, numbers3 = null, numbers4 = null, equation, solution;
         int[][] matrix = new int[num][num];
         int[] constt = new int[num];
         int[][] matrix1 = new int[num][num];
@@ -122,14 +156,61 @@ public class Matrix implements MatrixInterface {
             
             for (int j = 0; j < num; j++) {
 
-                System.out.println("matrix ["+i+"]["+j+"]");
+//                System.out.println("matrix ["+i+"]["+j+"]");
                 matrix[i][j] = sc.nextInt();
                 
+                
             }
-            System.out.println("const ["+ i +"] =");
+//            System.out.println("const ["+ i +"] =");
             constt[i] = sc.nextInt();
             
+            if (matrix[i][1] >= 0 && matrix[i][2] >= 0){
+                 numbers4 = matrix[i][0] +"x + " +matrix[i][1]+ "y + "+matrix[i][2]+ "z = " +constt[i];
+                 if(numbers == null){
+                     numbers = numbers4;
+                     
+                 }else if(numbers2 == null){
+                     numbers2 = numbers4;
+                 }else{
+                     numbers3 = numbers4;
+                 }
+                
+            }else if(matrix[i][1] >= 0 && matrix[i][2] <=0  ){
+                 numbers4 = matrix[i][0] +"x + " +matrix[i][1]+ "y "+matrix[i][2]+ "z = " +constt[i];
+                if (numbers == null){
+                     numbers = numbers4;
+                }else if(numbers2 == null){
+                    numbers2 = numbers4;
+                }else{
+                    numbers3 = numbers4;
+                }
+            }else if(matrix[i][1] <= 0 && matrix[i][2] >=0  ){
+                 numbers4 = matrix[i][0] +"x  " +matrix[i][1]+ "y + "+matrix[i][2]+ "z = " +constt[i];
+                 if (numbers == null){
+                     numbers = numbers4;
+                }else if(numbers2 == null){
+                    numbers2 = numbers4;
+                }else{
+                    numbers3 = numbers4;
+                }
+            }
+             
+             else{
+                 numbers4 = matrix[i][0] +"x "+matrix[i][1]+ "y "+matrix[i][2]+ "z = "+ constt[i];
+                 if (numbers == null){
+                     numbers = numbers4;
+                }else if(numbers2 == null){
+                    numbers2 = numbers4;
+                }else{
+                    numbers3 = numbers4;
+                }
+             }
         }
+        System.out.println(numbers);
+        System.out.println(numbers2);
+        System.out.println(numbers3);
+        equation = numbers + " "+ numbers2 + " " +numbers3;
+       
         
         // Representation of linear equations in form of
         // matrix
@@ -201,12 +282,11 @@ public class Matrix implements MatrixInterface {
     DecimalFormat dc = new DecimalFormat();
     int determitationZ = Determinant.determinantMatrix(matrix3, num);
     System.out.println("o determinant: " + determitationZ);
-    System.out.println("X: "+dc.format((double)determitationX / (double)determitationM) + ", Y: "+ dc.format((double)determitationY  / (double)determitationM) + ", Z: "+ dc.format((double)determitationZ / (double)determitationM));
-
-//    System.out.println("X: "+new DecimalFormat().format((double)determitationX / (double)determitationM) + ", Y: "+ new DecimalFormat("#.####").format((double)determitationY / (double)determitationM));
-        
+    solution ="X: "+dc.format((double)determitationX / (double)determitationM) + ", Y: "+ dc.format((double)determitationY  / (double)determitationM) + ", Z: "+ dc.format((double)determitationZ / (double)determitationM);
     
+    user.addEquation(equation, solution, id_user);
     lg.users(id_user);
     }
     
 }
+q1

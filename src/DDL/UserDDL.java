@@ -18,9 +18,6 @@ import java.sql.Statement;
  * @author wandw
  */
 public class UserDDL implements UserDDLInterface{
-    String dbName = "systemca";
-
-    
     
     Connection conn;
     PreparedStatement pstm;
@@ -45,8 +42,8 @@ public class UserDDL implements UserDDLInterface{
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS users  ("
                             + "user_id INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
-                            + "username VARCHAR(30) DEFAULT 'CCT',"
-                            + "password VARCHAR(30) DEFAULT 'Dublin',"
+                            + "username VARCHAR(30),"
+                            + "password VARCHAR(30),"
                             + "surname VARCHAR(40),"
                             + "email VARCHAR(100),"
                             + "contact VARCHAR(15));"
@@ -54,8 +51,8 @@ public class UserDDL implements UserDDLInterface{
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS equation ("
                             + "equation_id INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
-                            + "equations VARCHAR(45),"
-                            + "solution VARCHAR(45),"
+                            + "equations VARCHAR(100),"
+                            + "solution VARCHAR(100),"
                             + "users_id INT(20) NOT NULL,"
                             + "CONSTRAINT users_id FOREIGN KEY (users_id) REFERENCES users(user_id));"
                             
@@ -70,7 +67,7 @@ public class UserDDL implements UserDDLInterface{
                             
             );
            
-            
+            insert_admin();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,11 +97,60 @@ public class UserDDL implements UserDDLInterface{
         }
     }
     
+      public void addEquation(String equation, String solution, int id) {
+       int id_equation = 0;
+        String sql = "insert into  equation (equations, solution, users_id) values (?, ?, ?)";
+        String sq2 = "select * from equation where equation_id";
+        conn = new ConnectionFactory().conectaBD();
+
+        try {
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, equation);
+            pstm.setString(2, solution);
+            pstm.setInt(3, id);
+            
+            pstm.execute("USE systemca;");
+            pstm.execute();
+            pstm = conn.prepareStatement(sq2);
+            rs = pstm.executeQuery();
+            while(rs.next()){
+                id_equation = rs.getInt("equation_id");                   
+            }
+            
+            insert_adminfk(id_equation);
+            
+        } catch (SQLException e) {
+            System.out.println("add equation: " + e);
+        }
+    }
+        public void insert_adminfk(int id_equation) {
+       
+        String sql = "insert into  admin_user (userS_id, equation_id) values (1, ?)";
+
+        conn = new ConnectionFactory().conectaBD();
+
+        try {
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id_equation);
+
+            
+            pstm.execute("USE systemca;");
+            pstm.execute();
+            pstm.close();            
+        } catch (SQLException e) {
+            System.out.println("insert admin foreign key: " + e);
+        }
+    }
+   
+    
+      
+    
       @Override
     public void insert_admin() {
        
        String sql = "insert into users (username, password) values (?, ?)";
-//       String sql2 = "insert into admin_user (admin_id, userS_id, equation_id) values (null, 1, 1)";
         conn = new ConnectionFactory().conectaBD();
 
         try {
@@ -113,11 +159,6 @@ public class UserDDL implements UserDDLInterface{
             pstm.setString(1, "CCT");
             pstm.setString(2, "Dublin");
                     
-            
-            pstm.execute("USE systemca;");
-//            pstm = conn.prepareStatement(sql2);
-//            pstm.setInt(1, 1);
-//            pstm.setInt(2, 0);
             pstm.execute("USE systemca;");
             pstm.execute();
             pstm.close();
@@ -200,7 +241,6 @@ public class UserDDL implements UserDDLInterface{
         try {
             conn = new ConnectionFactory().conectaBD();
             pstm = conn.prepareStatement(sql);
-//            pstm.setInt(1, id);
             
             pstm.execute("USE systemca;");
             rs = pstm.executeQuery();
@@ -220,7 +260,7 @@ public class UserDDL implements UserDDLInterface{
                
             }
         } catch (SQLException e) {
-            System.out.println("Find User: " + e);
+            System.out.println("See equation: " + e);
         }
     }
 
