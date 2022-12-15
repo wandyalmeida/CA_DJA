@@ -10,7 +10,8 @@ import java.util.Scanner;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class SignUp implements SignUpInterface{
     

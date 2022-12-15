@@ -17,7 +17,8 @@ import java.sql.Connection;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class login implements LoginInterface {
     Scanner input = new Scanner(System.in);
@@ -62,7 +63,7 @@ public class login implements LoginInterface {
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 login();
             }
-            list.check_admin(id, username, password);
+            list.check_user(id, username, password);
 
         } catch (SQLException e) {
             System.out.println("Erro in login " + e);

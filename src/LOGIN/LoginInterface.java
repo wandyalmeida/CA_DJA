@@ -6,7 +6,8 @@ package LOGIN;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public interface LoginInterface {
     public void login();

@@ -6,7 +6,8 @@ package SIGNUP;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public interface SignUpInterface {
     public void Sign_upUsers();

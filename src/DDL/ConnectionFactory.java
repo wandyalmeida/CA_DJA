@@ -10,10 +10,13 @@ import java.sql.SQLException;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class ConnectionFactory implements ConnectionInterface{
-
+    /*
+        Will connect the Java Aplication with the DataBase.
+    */
     
     @Override
     public Connection conectaBD() {
@@ -25,7 +28,6 @@ public class ConnectionFactory implements ConnectionInterface{
             String USER = "root";
             String PASS = "root";
             conn = DriverManager.getConnection("jdbc:mysql://localhost/", USER, PASS);
-//            System.out.println("connect yeahhh");
             
             
             

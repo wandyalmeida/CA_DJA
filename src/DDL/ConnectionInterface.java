@@ -8,7 +8,8 @@ import java.sql.Connection;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public interface ConnectionInterface {
     public Connection conectaBD();

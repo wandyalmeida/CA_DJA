@@ -6,7 +6,8 @@ package Equation;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class Determinant {
 

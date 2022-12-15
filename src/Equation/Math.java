@@ -8,7 +8,8 @@ import java.util.Scanner;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class Math implements MathInterface {
 
@@ -27,11 +28,11 @@ public class Math implements MathInterface {
         int num = sc.nextInt();
         try {
             if (num == 1 ) {
-                System.out.println("it is working");
+                
                 matrix.Matrix_2X2(2, id_user);
            
             }if (num == 2 ) {
-                System.out.println("it is working");
+               
                 matrix.Matrix_3X3(3, id_user);
            
             }

@@ -11,7 +11,8 @@ import java.util.Scanner;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class Matrix implements MatrixInterface {
 
@@ -25,7 +26,7 @@ public class Matrix implements MatrixInterface {
             "Enter the coefficients variable");
         System.out.println(
             "Enter in the format shown below");
-        System.out.println("ax + by + cz = d");
+        System.out.println("ax + by = d");
        
         // Input of coefficients from user
         String numbers = null, numbers2 = null, numbers3 = null, equation, solution;
@@ -38,11 +39,10 @@ public class Matrix implements MatrixInterface {
             
             for (int j = 0; j < num; j++) {
 
-//                System.out.println("matrix ["+i+"]["+j+"]");
                 matrix[i][j] = sc.nextInt();
                 
             }
-//            System.out.println("const ["+ i +"] =");
+
             constt[i] = sc.nextInt();
             if (matrix[i][1] >= 0){
                  numbers3 = matrix[i][0] +"x + "+matrix[i][1]+ "y = "+ constt[i];
@@ -283,10 +283,9 @@ public class Matrix implements MatrixInterface {
     int determitationZ = Determinant.determinantMatrix(matrix3, num);
     System.out.println("o determinant: " + determitationZ);
     solution ="X: "+dc.format((double)determitationX / (double)determitationM) + ", Y: "+ dc.format((double)determitationY  / (double)determitationM) + ", Z: "+ dc.format((double)determitationZ / (double)determitationM);
-    
+    System.out.println(solution);
     user.addEquation(equation, solution, id_user);
     lg.users(id_user);
     }
     
 }
-q1

@@ -8,7 +8,8 @@ import LOGIN.login;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class CA_DJA {
 
@@ -17,8 +18,12 @@ public class CA_DJA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        // Create the DataBase and add the Admin user.
         UserDDL createDB = new UserDDL();
         createDB.outputSetup();
+        
+        // Show the menu for login or sign up.
         login log = new login();
         log.menu();
     }

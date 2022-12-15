@@ -6,7 +6,8 @@ package Equation;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public interface MatrixInterface {
     public void Matrix_2X2(int num, int id_user);

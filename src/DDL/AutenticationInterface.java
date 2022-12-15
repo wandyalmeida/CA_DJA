@@ -9,7 +9,8 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public interface AutenticationInterface {
     public ResultSet autenticationUesr(UserDML objUserDML);

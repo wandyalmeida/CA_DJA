@@ -12,12 +12,15 @@ import java.sql.SQLException;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim 
  */
 public class Autentication implements AutenticationInterface {
     Connection conn;
     PreparedStatement pstm;
-    
+    /*
+    Start check if have this user on the DataBase and if it is correct.
+    */
     @Override
     public ResultSet autenticationUesr(UserDML objUserDML) {
           conn = new ConnectionFactory().conectaBD();

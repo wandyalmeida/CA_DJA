@@ -6,9 +6,10 @@ package Equation;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public enum MathTypes {
-    MATRIX_2X2,
+    MATRIX2X2,
     MATRIX_3X3,
 }

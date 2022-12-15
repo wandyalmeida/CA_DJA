@@ -6,7 +6,8 @@ package DML;
 
 /**
  *
- * @author wandw
+ * @author Wandwilson Almeida Da Silva
+ * Student name: Carolina Gomes Landim
  */
 public class UserDML {
     private String username, user_password, surname, email, contact;
