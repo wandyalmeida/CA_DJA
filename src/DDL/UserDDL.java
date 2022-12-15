@@ -180,7 +180,7 @@ public class UserDDL implements UserDDLInterface{
     @Override
     public void insert_adminfk(int id_equation) {
        
-        String sql = "insert into  admin_user (userS_id, equation_id) values (1, ?)";// this will set the equation_id the userS_id will be always the admin id.
+        String sql = "insert  into  admin_user (userS_id, equation_id) values (1, ?)";// this will set the equation_id the userS_id will be always the admin id.
 
         conn = new ConnectionFactory().conectaBD();
 
@@ -195,7 +195,8 @@ public class UserDDL implements UserDDLInterface{
             
             pstm.execute("USE systemca;");
             pstm.execute();
-            pstm.close();            
+            pstm.close();  
+            
         } catch (SQLException e) {
             System.out.println("insert admin foreign key: " + e);
         }
@@ -209,8 +210,8 @@ public class UserDDL implements UserDDLInterface{
     @Override
     public void insert_admin() {
        
-       String sql = "insert into users (username, password) values (?, ?)"; // will set the CCT as a Admin when the code start on the first time.
-       
+       String sql = "insert into  users(username, password) values (?, ?) "; // will set the CCT as a Admin when the code start on the first time.
+       String delete = "delete from users where user_id != '1' and username = 'CCT' and password = 'Dublin'";
 
         try {
             /*
@@ -218,13 +219,18 @@ public class UserDDL implements UserDDLInterface{
             CONN = Connection.
             */
             conn = new ConnectionFactory().conectaBD();
-            pstm = conn.prepareStatement(sql);
-            pstm.setString(1, "CCT");
-            pstm.setString(2, "Dublin");
-                    
+            
+            pstm = conn.prepareStatement(delete);       
             pstm.execute("USE systemca;");
+
+            
+//            pstm.execute();
+            if (pstm != null){
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(1, "CCT");
+                pstm.setString(2, "Dublin");
+            }
             pstm.execute();
-            pstm.close();
         } catch (SQLException e) {
             System.out.println("insert Admin: " + e);// show this message if this method get a error.
         }
@@ -292,7 +298,7 @@ public class UserDDL implements UserDDLInterface{
             pstm.execute("USE systemca;");
             rs = pstm.executeQuery();
             
-            System.out.println("|ID\t" + "|NAME\t  " + "\t|SURNAME" + "\t\t|CONTACT" );
+            System.out.println("|ID\t" + "|NAME\t  " + "\t|SURNAME" + "\t|CONTACT" );
              System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             while(rs.next()){
                   
@@ -302,7 +308,7 @@ public class UserDDL implements UserDDLInterface{
                    contact = rs.getString("contact");
                    
                    if (username.length() <= 6){
-                       System.out.println("|" +id_user +"\t|"+username +"\t \t|"+surname +"\t \t|"+contact);// show the table.
+                       System.out.println("|" +id_user +"\t|"+username +"\t \t|"+surname +"\t \t\t|"+contact);// show the table.
                         
                    }
                    if(username.length() >= 6){
