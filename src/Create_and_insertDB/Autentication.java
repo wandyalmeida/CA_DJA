@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DDL;
+package Create_and_insertDB;
 
-import DML.UserDML;
+import USER_GET_SET.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +12,8 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Wandwilson Almeida Da Silva
- * Student name: Carolina Gomes Landim 
+ * @author Wandwilson Almeida Da Silva 2021230
+ * @author Carolina Gomes Landim 2021226
  */
 public class Autentication implements AutenticationInterface {
     Connection conn;
@@ -22,7 +22,7 @@ public class Autentication implements AutenticationInterface {
     Start check if have this user on the DataBase and if it is correct.
     */
     @Override
-    public ResultSet autenticationUesr(UserDML objUserDML) {
+    public ResultSet autenticationUesr(Users objUserDML) {
           conn = new ConnectionFactory().conectaBD();
         
         try {
@@ -40,7 +40,7 @@ public class Autentication implements AutenticationInterface {
             
             return rs;
         } catch (SQLException e) {
-            System.out.println("Autentication: " + e);
+            System.out.println("Autentication: " + e);// show this message if this method get a error.
             return null;
         }
     }

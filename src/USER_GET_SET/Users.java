@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DML;
+package USER_GET_SET;
 
 /**
  *
- * @author Wandwilson Almeida Da Silva
- * Student name: Carolina Gomes Landim
+ * @author Wandwilson Almeida Da Silva 2021230
+ * @author Carolina Gomes Landim 2021226
  */
-public class UserDML {
+public class Users { //This method is responsible to get and set the users input
     private String username, user_password, surname, email, contact;
     private int id_user;
 
