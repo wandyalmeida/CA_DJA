@@ -150,16 +150,16 @@ public class Matrix implements MatrixInterface {
 
         do{
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            System.out.println("Would you like to save this equation ?"
+            System.out.println("Would you like to save this equation ? Please Type only the number."
                     + "\n[1] Yes"
                     + "\n[2] No  ");
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            int option = input.nextInt();
+            String option = input.next();
             switch (option) {
-                case 1:
+                case "1":
                     op = false;
                     break;
-                case 2:
+                case "2":
                     System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     System.out.println("This solution was not save.");
                     lg.users(id_user);
@@ -344,16 +344,16 @@ public class Matrix implements MatrixInterface {
     
     do{
         System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        System.out.println("Would you like to save this equation ?"
+        System.out.println("Would you like to save this equation ? Please Type only the number."
                 + "\n[1] Yes"
                 + "\n[2] No  ");
         System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        int option = input.nextInt();
+        String option = input.next();
         switch (option) {
-            case 1:
+            case "1":
                 op = false;
                 break;
-            case 2:
+            case "2":
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 System.out.println("This solution was not save.");
                 lg.users(id_user);
@@ -362,7 +362,7 @@ public class Matrix implements MatrixInterface {
                 System.out.println("wrong option try again");
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 break;
-        }
+            }
     
     }while (op);
         System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
