@@ -27,3 +27,4 @@ equations doesn’t have solution, the user should get a warning message.
 o Should be able to save and see the system of equations computed and their solutions.
 o Should be able to save and see the system of equations computed and their solutions.
 
+
