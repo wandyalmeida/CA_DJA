@@ -274,8 +274,9 @@ public class DDL_DML_DQL implements DDL_DML_DQLINTERFACE{
     */
     @Override
     public void delete(Users objdeleteDML){
+        String SQL_COMMAND_Delete_equation = "delete from equation where users_id = ? ";//This will get the id that the admin put to delete.
         String SQL_COMMAND = "delete from users where user_id = ? ";//This will get the id that the admin put to delete.
-
+        
         
         
         try {
@@ -285,6 +286,13 @@ public class DDL_DML_DQL implements DDL_DML_DQLINTERFACE{
                 login.admin(objdeleteDML.getId_user());
             }else{
                 conn = new ConnectionFactory().conectaBD();
+                //Delete equation that the user did if the admin decide delete the user
+                pstm = conn.prepareStatement(SQL_COMMAND_Delete_equation);
+                pstm.setInt(1, objdeleteDML.getId_user());
+
+                pstm.execute("USE systemca;");
+                pstm.execute();
+                //Delete the user
                 pstm = conn.prepareStatement(SQL_COMMAND);
                 pstm.setInt(1, objdeleteDML.getId_user());
 
